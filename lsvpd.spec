@@ -2,7 +2,7 @@ Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
 Version:	0.11.5
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
@@ -38,6 +38,7 @@ wypisuje poziomy mikrokodu i firmware'u.
 %setup -q
 
 %build
+sed -ie "s,#!/bin/sh,#!/bin/bash," lsvpd.in
 %{__make} \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -Wall -I../lib"
@@ -76,7 +77,27 @@ fi
 %attr(755,root,root) /sbin/lscfg
 %attr(755,root,root) /sbin/lsmcode
 %attr(755,root,root) /sbin/update-device-tree
-/lib/lsvpd
+%dir /lib/lsvpd/
+/lib/lsvpd/common.d
+/lib/lsvpd/debug.bash
+/lib/lsvpd/lscfg.d
+/lib/lsvpd/lsmcode.d
+/lib/lsvpd/lsvpd-functions.bash
+/lib/lsvpd/lsvpd.d
+/lib/lsvpd/pci.ids
+/lib/lsvpd/query.d
+/lib/lsvpd/scan.d
+/lib/lsvpd/scsihost.conf
+/lib/lsvpd/scsivpd.conf
+%attr(755,root,root) /lib/lsvpd/pci_lookup
+%attr(755,root,root) /lib/lsvpd/tdump
+%attr(755,root,root) /lib/lsvpd/tidy_device_trees
+%attr(755,root,root) /lib/lsvpd/tidy_subdirs
+%attr(755,root,root) /lib/lsvpd/ibm_vpd_render
+%attr(755,root,root) /lib/lsvpd/lsvpd_test
+%attr(755,root,root) /lib/lsvpd/pci_vpd_cap_grab
+%attr(755,root,root) /lib/lsvpd/scsi_vpd_custom
+%attr(755,root,root) /lib/lsvpd/scsi_vpd_std
 %attr(754,root,root) /etc/rc.d/init.d/lsvpd
 %attr(755,root,root) /etc/cron.daily/lsvpd
 %{_mandir}/man8/*
