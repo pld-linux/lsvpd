@@ -2,11 +2,12 @@ Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
 Version:	0.12.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	0fc276aa5c7ffba17c94c702490902b6
+Patch0:		%{name}-ide-proc.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
@@ -37,6 +38,7 @@ wypisuje poziomy mikrokodu i firmware'u.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 sed -ie "s,#!/bin/sh,#!/bin/bash," lsvpd.in
