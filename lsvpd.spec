@@ -1,12 +1,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
-Version:	0.12.0
+Version:	0.12.3
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	9263e68bda986f22dbdc11f18b7812b4
+# Source0-md5:	0fc276aa5c7ffba17c94c702490902b6
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
@@ -79,6 +79,7 @@ fi
 %attr(755,root,root) /sbin/update-lsvpd-db
 %dir /lib/lsvpd
 /lib/lsvpd/common.d
+/lib/lsvpd/common-post.d
 /lib/lsvpd/debug.bash
 /lib/lsvpd/lscfg.d
 /lib/lsvpd/lsmcode.d
@@ -91,12 +92,16 @@ fi
 /lib/lsvpd/scsivpd.conf
 %attr(755,root,root) /lib/lsvpd/ibm_vpd_render
 %attr(755,root,root) /lib/lsvpd/lsvpd_test
+%attr(755,root,root) /lib/lsvpd/pci_ethernet_map
 %attr(755,root,root) /lib/lsvpd/pci_lookup
+%attr(755,root,root) /lib/lsvpd/pci_scsi_map
 %attr(755,root,root) /lib/lsvpd/pci_vpd_cap_grab
 %attr(755,root,root) /lib/lsvpd/scsi_vpd_render
 %attr(755,root,root) /lib/lsvpd/tdump
 %attr(755,root,root) /lib/lsvpd/tidy_lsvpd_dbs
 %attr(755,root,root) /lib/lsvpd/tidy_subdirs
+%attr(755,root,root) /lib/lsvpd/update-vpd.hotplug
+%attr(755,root,root) /lib/lsvpd/vpd-name-crosslink.hotplug
 %attr(754,root,root) /etc/rc.d/init.d/lsvpd
 %attr(755,root,root) /etc/cron.daily/lsvpd
 %{_mandir}/man8/*
