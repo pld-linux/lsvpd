@@ -1,5 +1,5 @@
---- 07device_ide_proc.orig	2004-11-17 11:30:10.000000000 +0100
-+++ /lib/lsvpd/scan.d/07device_ide_proc	2004-11-17 13:20:18.000000000 +0100
+--- lsvpd-0.12.3/setup/scan.d/07device_ide_proc.orig	2004-11-17 11:30:10.000000000 +0100
++++ lsvpd-0.12.3/setup/scan.d/07device_ide_proc	2004-11-17 13:20:18.000000000 +0100
 @@ -108,6 +108,7 @@
  	    local yl
  
