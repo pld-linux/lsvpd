@@ -7,6 +7,7 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	0fc276aa5c7ffba17c94c702490902b6
+URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
