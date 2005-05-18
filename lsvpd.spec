@@ -9,6 +9,7 @@ Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	d5e46f3a92e36a82a07e02fd3244e6d9
 Patch0:		%{name}-ide-proc.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
+BuildRequires:	perl-base
 BuildRequires:	sed >= 4.0
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
