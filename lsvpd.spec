@@ -91,6 +91,7 @@ fi
 /lib/lsvpd/lsvpd-functions.bash
 /lib/lsvpd/lsvpd.d
 /lib/lsvpd/pci.ids
+/lib/lsvpd/pci.vendor.blacklist
 /lib/lsvpd/query.d
 /lib/lsvpd/scan.d
 /lib/lsvpd/scsihost.conf
