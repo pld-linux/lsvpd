@@ -1,12 +1,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
-Version:	0.13.2
+Version:	0.14.1
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	4024bbc947bd399c5951861c48ea8425
+# Source0-md5:	f310891ca548358e778d7009ba0c0976
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	perl-base
 BuildRequires:	sed >= 4.0
@@ -98,14 +98,12 @@ fi
 /lib/lsvpd/pci.ids
 /lib/lsvpd/query.d
 /lib/lsvpd/scan.d
-/lib/lsvpd/scsihost.conf
 /lib/lsvpd/scsivpd.conf
+%attr(755,root,root) /lib/lsvpd/adapter_pci_map
 %attr(755,root,root) /lib/lsvpd/device_handler
 %attr(755,root,root) /lib/lsvpd/ibm_vpd_render
 %attr(755,root,root) /lib/lsvpd/lsvpd_test
-%attr(755,root,root) /lib/lsvpd/pci_ethernet_map
 %attr(755,root,root) /lib/lsvpd/pci_lookup
-%attr(755,root,root) /lib/lsvpd/pci_scsi_map
 %attr(755,root,root) /lib/lsvpd/pci_vpd_cap_grab
 %attr(755,root,root) /lib/lsvpd/tdump
 %attr(755,root,root) /lib/lsvpd/tidy_lsvpd_dbs
