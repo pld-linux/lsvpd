@@ -9,10 +9,10 @@ Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	f310891ca548358e778d7009ba0c0976
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	perl-base
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 BuildRequires:	sg3_utils-devel >= 1.01
 BuildRequires:	sysfsutils-devel >= 1.3.0-3
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
 Requires:	/bin/sed
@@ -41,7 +41,6 @@ wypisuje poziomy mikrokodu i firmware'u.
 
 %prep
 %setup -q
-
 sed -i -e "s,#!/bin/sh,#!/bin/bash," scripts/lsvpd.in
 
 %build
@@ -71,9 +70,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add lsvpd
+%service lsvpd restart
 
 %preun
 if [ "$1" = "0" ] ; then
+	%service lsvpd stop
 	/sbin/chkconfig --del lsvpd
 fi
 
