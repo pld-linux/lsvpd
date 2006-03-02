@@ -17,6 +17,7 @@ Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
 Requires:	/bin/sed
 Requires:	/bin/sh
+Requires:	rc-scripts
 Requires:	sg3_utils >= 1.01
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
