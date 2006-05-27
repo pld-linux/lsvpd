@@ -1,18 +1,19 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
-Version:	0.14.1
+Version:	0.15.0
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	f310891ca548358e778d7009ba0c0976
+# Source0-md5:	1019318fa4d81c080153682c36bd5831
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	perl-base
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 BuildRequires:	sg3_utils-devel >= 1.01
 BuildRequires:	sysfsutils-devel >= 1.3.0-3
+BuildRequires:	sysfsutils-devel < 2.0.0
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
 Requires:	/bin/sed
@@ -45,9 +46,10 @@ wypisuje poziomy mikrokodu i firmware'u.
 sed -i -e "s,#!/bin/sh,#!/bin/bash," scripts/lsvpd.in
 
 %build
+# disable unit-at-a-time - see src/init.h
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -Wall -I../lib" \
+	CFLAGS="%{rpmcflags} -fstrict-aliasing -fno-unit-at-a-time -Wall -Werror -I../lib" \
 	LDLIBS="-lsysfs -lsgutils"
 
 %install
