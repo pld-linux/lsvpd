@@ -1,12 +1,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
-Version:	0.15.0
+Version:	0.15.1
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	1019318fa4d81c080153682c36bd5831
+# Source0-md5:	1d0f5528da6d3098482846b1f3766135
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	perl-base
 BuildRequires:	rpmbuild(macros) >= 1.268
