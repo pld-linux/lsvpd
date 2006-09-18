@@ -1,19 +1,17 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
 Name:		lsvpd
-Version:	0.15.1
+Version:	0.16.0
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	1d0f5528da6d3098482846b1f3766135
+# Source0-md5:	d3abbecb7056816fe3f6ce6729b433cc
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	perl-base
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
 BuildRequires:	sg3_utils-devel >= 1.01
-BuildRequires:	sysfsutils-devel >= 1.3.0-3
-BuildRequires:	sysfsutils-devel < 2.0.0
 Requires(post,preun):	/sbin/chkconfig
 Requires:	/bin/bash
 Requires:	/bin/sed
@@ -49,8 +47,8 @@ sed -i -e "s,#!/bin/sh,#!/bin/bash," scripts/lsvpd.in
 # disable unit-at-a-time - see src/init.h
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -fstrict-aliasing -fno-unit-at-a-time -Wall -Werror -I../lib" \
-	LDLIBS="-lsysfs -lsgutils"
+	CFLAGS="%{rpmcflags} -fno-unit-at-a-time -Wall -Werror -I../lib" \
+	LDLIBS="-lsgutils"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -61,10 +59,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
 install debian/init.d $RPM_BUILD_ROOT/etc/rc.d/init.d/lsvpd
 # don't install this right now.  It can crash systems.
-rm -f $RPM_BUILD_ROOT/lib/lsvpd/pci_vpd_rom_grab
+#rm -f $RPM_BUILD_ROOT/lib/lsvpd/pci_vpd_rom_grab
 
 install -d $RPM_BUILD_ROOT/etc/cron.daily
-install scripts/lsvpd.cron.daily $RPM_BUILD_ROOT/etc/cron.daily/lsvpd
+install debian/cron.daily $RPM_BUILD_ROOT/etc/cron.daily/lsvpd
 
 ln -sf /usr/bin/find $RPM_BUILD_ROOT/lib/lsvpd/find
 
@@ -103,17 +101,10 @@ fi
 /lib/lsvpd/query.d
 /lib/lsvpd/scan.d
 /lib/lsvpd/scsivpd.conf
-%attr(755,root,root) /lib/lsvpd/adapter_pci_map
-%attr(755,root,root) /lib/lsvpd/device_handler
+%attr(755,root,root) /lib/lsvpd/adapter_pci_legacy
 %attr(755,root,root) /lib/lsvpd/ibm_vpd_render
-%attr(755,root,root) /lib/lsvpd/lsvpd_test
-%attr(755,root,root) /lib/lsvpd/pci_lookup
-%attr(755,root,root) /lib/lsvpd/pci_vpd_cap_grab
+%attr(755,root,root) /lib/lsvpd/node_handler
 %attr(755,root,root) /lib/lsvpd/tdump
-%attr(755,root,root) /lib/lsvpd/tidy_lsvpd_dbs
-%attr(755,root,root) /lib/lsvpd/tidy_subdirs
-%attr(755,root,root) /lib/lsvpd/update-vpd.hotplug
-%attr(755,root,root) /lib/lsvpd/vpd-name-crosslink.hotplug
 %attr(754,root,root) /etc/rc.d/init.d/lsvpd
 %attr(755,root,root) /etc/cron.daily/lsvpd
 %{_mandir}/man8/*
