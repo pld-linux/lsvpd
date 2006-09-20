@@ -8,6 +8,7 @@ Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	d3abbecb7056816fe3f6ce6729b433cc
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
+BuildRequires:	gcc >= 4.0.0
 BuildRequires:	perl-base
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
