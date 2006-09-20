@@ -7,9 +7,8 @@ License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
 # Source0-md5:	d3abbecb7056816fe3f6ce6729b433cc
+Patch0:		%{name}-gcc4.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
-# for -fno-unit-at-a-time
-BuildRequires:	gcc >= 5:4.0.0
 BuildRequires:	perl-base
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -43,13 +42,13 @@ wypisuje poziomy mikrokodu i firmware'u.
 
 %prep
 %setup -q
+%patch0 -p1
 sed -i -e "s,#!/bin/sh,#!/bin/bash," scripts/lsvpd.in
 
 %build
-# disable unit-at-a-time - see src/init.h
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -fno-unit-at-a-time -Wall -Werror -I../lib" \
+	CFLAGS="%{rpmcflags} -Wall -Werror -I../lib" \
 	LDLIBS="-lsgutils"
 
 %install
