@@ -1,5 +1,5 @@
 Summary:	VPD/hardware inventory utilities for Linux
-Summary(pl):	Narzêdzia do inwentaryzacji VPD/sprzêtu dla Linuksa
+Summary(pl.UTF-8):   NarzÄ™dzia do inwentaryzacji VPD/sprzÄ™tu dla Linuksa
 Name:		lsvpd
 Version:	0.16.0
 Release:	1
@@ -31,13 +31,13 @@ provides a more human-readable format of the VPD, as well as some
 system-specific information. lsmcode lists microcode and firmware
 levels.
 
-%description -l pl
-Pakiet lsvpd zawiera polecenia lsvpd, lscfg i lsmcode. Tworz± one,
+%description -l pl.UTF-8
+Pakiet lsvpd zawiera polecenia lsvpd, lscfg i lsmcode. TworzÄ… one,
 wraz z uruchamianym przy starcie systemu skryptem update-device-tree,
-prosty system inwentaryzacji sprzêtu. Polecenie lsvpd dostarcza VPD
-(Vital Product Data) o podzespo³ach sprzêtowych dla narzêdzi wy¿szego
-poziomu. Polecenie lscfg dostarcza bardziej czyteln± dla cz³owieka
-postaæ VPD oraz trochê informacji specyficznych dla systemu. lsmcode
+prosty system inwentaryzacji sprzÄ™tu. Polecenie lsvpd dostarcza VPD
+(Vital Product Data) o podzespoÅ‚ach sprzÄ™towych dla narzÄ™dzi wyÅ¼szego
+poziomu. Polecenie lscfg dostarcza bardziej czytelnÄ… dla czÅ‚owieka
+postaÄ‡ VPD oraz trochÄ™ informacji specyficznych dla systemu. lsmcode
 wypisuje poziomy mikrokodu i firmware'u.
 
 %prep
