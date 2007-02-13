@@ -1,5 +1,5 @@
 Summary:	VPD/hardware inventory utilities for Linux
-Summary(pl.UTF-8):   Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
+Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
 Version:	0.16.0
 Release:	1
