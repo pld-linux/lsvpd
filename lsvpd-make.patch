@@ -1,0 +1,55 @@
+--- lsvpd-1.0.3/Makefile.am.orig	2007-02-13 00:21:51.000000000 +0100
++++ lsvpd-1.0.3/Makefile.am	2007-02-18 12:55:47.609817984 +0100
+@@ -25,7 +25,7 @@
+ 
+ lib_LTLIBRARIES = libvpd-1.0.la
+ 
+-library_includedir=/usr/$(includedir)/libvpd-1/
++library_includedir=$(includedir)/libvpd-1/
+ library_include_HEADERS = $(lib_h_files)
+ 
+ INCLUDES = -I./src/include
+@@ -70,33 +70,27 @@
+ 		
+ lsmcode_SOURCES = src/output/lsmcode.cpp \
+ 		$(lib_h_files)
+-		
+-vpdupdate_LDADD = -L. -ldb_cxx-4.2 -lstdc++ -lz /usr/lib/libsgutils.a ./libvpd-1.0.la
++
++LIBDB=-ldb_cxx-4.5
++
++vpdupdate_LDADD = $(LIBDB) -lstdc++ -lz -lsgutils ./libvpd-1.0.la
+ vpdupdate_LDFLAGS = -Wall
+-lsvpd_LDADD = -L. -ldb_cxx-4.2 -lstdc++ -lz ./libvpd-1.0.la
++lsvpd_LDADD = $(LIBDB) -lstdc++ -lz ./libvpd-1.0.la
+ lsvpd_LDFLAGS = -Wall
+-lscfg_LDADD = -L. -ldb_cxx-4.2 -lstdc++ -lz ./libvpd-1.0.la
++lscfg_LDADD = $(LIBDB) -lstdc++ -lz ./libvpd-1.0.la
+ lscfg_LDFLAGS = -Wall
+-lsvio_LDADD = -L. -ldb_cxx-4.2 -lstdc++ -lz ./libvpd-1.0.la
++lsvio_LDADD = $(LIBDB) -lstdc++ -lz ./libvpd-1.0.la
+ lsvio_LDFLAGS = -Wall
+-lsmcode_LDADD = -L. -ldb_cxx-4.2 -lstdc++ -lz ./libvpd-1.0.la
++lsmcode_LDADD = $(LIBDB) -lstdc++ -lz ./libvpd-1.0.la
+ lsmcode_LDFLAGS = -Wall
+ 
+-libvpd_1_0_la_LDFLAGS = -module
++libvpd_1_0_la_LIBADD = $(LIBDB)
+ 
+ AM_CXXFLAGS = -DDEST_DIR='"${exec_prefix}"' -DVPD_VERSION='"@VERSION@"'
+ 
+-if PCI_IDS_LOC
+-AM_CXXFLAGS += -DPCI_IDS='"/usr/share/pci.ids"'
+-else
+-AM_CXXFLAGS += -DPCI_IDS='"/usr/share/misc/pci.ids"'
+-endif
++AM_CXXFLAGS += -DPCI_IDS='"/etc/pci.ids"'
+ 
+-if USB_IDS_LOC
+-AM_CXXFLAGS += -DUSB_IDS='"/usr/share/usb.ids"'
+-else
+ AM_CXXFLAGS += -DUSB_IDS='"/usr/share/misc/usb.ids"'
+-endif
+ 
+ if DB_CXX_H4_2
+ AM_CXXFLAGS += -DDB_CXX='<db4.2/db_cxx.h>'
