@@ -1,25 +1,30 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	0.16.0
+Version:	1.0.3
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	d3abbecb7056816fe3f6ce6729b433cc
-Patch0:		%{name}-gcc4.patch
+# Source0-md5:	5d6cc395deeab1bb926a2f973d4cad1d
+Patch0:		%{name}-make.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
-BuildRequires:	perl-base
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	db-cxx-devel >= 4.2
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	sed >= 4.0
-BuildRequires:	sg3_utils-devel >= 1.01
+BuildRequires:	sg3_utils-devel
+BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
-Requires:	/bin/bash
-Requires:	/bin/sed
-Requires:	/bin/sh
+Requires(post):	/sbin/ldconfig
 Requires:	rc-scripts
-Requires:	sg3_utils >= 1.01
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_exec_prefix	/
+%define		_libdir		/usr/%{_lib}
+%define		_sbindir	/sbin
 
 %description
 The lsvpd package contains both the lsvpd, lscfg and lsmcode commands.
@@ -40,16 +45,42 @@ poziomu. Polecenie lscfg dostarcza bardziej czytelną dla człowieka
 postać VPD oraz trochę informacji specyficznych dla systemu. lsmcode
 wypisuje poziomy mikrokodu i firmware'u.
 
+%package devel
+Summary:	Header files for vpd library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki vpd
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description devel
+Header files for vpd library.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki vpd.
+
+%package static
+Summary:	Static vpd library
+Summary(pl.UTF-8):	Statyczna biblioteka vpd
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static vpd library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka vpd.
+
 %prep
 %setup -q
 %patch0 -p1
-sed -i -e "s,#!/bin/sh,#!/bin/bash," scripts/lsvpd.in
 
 %build
-%{__make} \
-	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -Wall -Werror -I../lib" \
-	LDLIBS="-lsgutils"
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -58,54 +89,51 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/etc/rc.d/init.d
-install debian/init.d $RPM_BUILD_ROOT/etc/rc.d/init.d/lsvpd
-# don't install this right now.  It can crash systems.
-#rm -f $RPM_BUILD_ROOT/lib/lsvpd/pci_vpd_rom_grab
+install vpdupdater $RPM_BUILD_ROOT/etc/rc.d/init.d/vpdupdater
 
-install -d $RPM_BUILD_ROOT/etc/cron.daily
-install debian/cron.daily $RPM_BUILD_ROOT/etc/cron.daily/lsvpd
-
-ln -sf /usr/bin/find $RPM_BUILD_ROOT/lib/lsvpd/find
+install -d $RPM_BUILD_ROOT/%{_lib}
+mv -f $RPM_BUILD_ROOT%{_libdir}/libvpd-1.0.so.*.*.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo libvpd-1.0.so.*.*.*) $RPM_BUILD_ROOT%{_libdir}/libvpd-1.0.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add lsvpd
-%service lsvpd restart
+/sbin/ldconfig
+/sbin/chkconfig --add vpdupdater
+
+%postun	-p /sbin/ldconfig
 
 %preun
 if [ "$1" = "0" ] ; then
-	%service lsvpd stop
-	/sbin/chkconfig --del lsvpd
+	/sbin/chkconfig --del vpdupdater
 fi
+
+%triggerpostun -- lsvpd < 1.0.0
+/sbin/chkconfig --del lsvpd
 
 %files
 %defattr(644,root,root,755)
 %doc NEWS README TODO docs/*.html
-%attr(755,root,root) /sbin/lsvpd
 %attr(755,root,root) /sbin/lscfg
 %attr(755,root,root) /sbin/lsmcode
 %attr(755,root,root) /sbin/lsvio
-%attr(755,root,root) /sbin/update-lsvpd-db
-%dir /lib/lsvpd
-/lib/lsvpd/common.d
-/lib/lsvpd/common-post.d
-/lib/lsvpd/debug.bash
-/lib/lsvpd/ide_mf.map
-/lib/lsvpd/lscfg.d
-/lib/lsvpd/lsmcode.d
-/lib/lsvpd/lsvio.d
-/lib/lsvpd/lsvpd-functions.bash
-/lib/lsvpd/lsvpd.d
-/lib/lsvpd/pci.ids
-/lib/lsvpd/query.d
-/lib/lsvpd/scan.d
-/lib/lsvpd/scsivpd.conf
-%attr(755,root,root) /lib/lsvpd/adapter_pci_legacy
-%attr(755,root,root) /lib/lsvpd/ibm_vpd_render
-%attr(755,root,root) /lib/lsvpd/node_handler
-%attr(755,root,root) /lib/lsvpd/tdump
-%attr(754,root,root) /etc/rc.d/init.d/lsvpd
-%attr(755,root,root) /etc/cron.daily/lsvpd
-%{_mandir}/man8/*
+%attr(755,root,root) /sbin/lsvpd
+%attr(755,root,root) /sbin/vpdupdate
+%attr(755,root,root) /%{_lib}/libvpd-1.0.so.*.*.*
+%attr(754,root,root) /etc/rc.d/init.d/vpdupdater
+%{_mandir}/man8/lscfg.8*
+%{_mandir}/man8/lsmcode.8*
+%{_mandir}/man8/lsvio.8*
+%{_mandir}/man8/lsvpd.8*
+%{_mandir}/man8/vpdupdate.8*
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libvpd-1.0.so
+%{_libdir}/libvpd-1.0.la
+%{_includedir}/libvpd-1
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libvpd-1.0.a
