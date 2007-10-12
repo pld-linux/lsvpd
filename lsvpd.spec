@@ -80,7 +80,7 @@ Statyczna biblioteka vpd.
 %{__autoheader}
 %{__automake}
 %configure
-%{__make}
+%{__make} LIBDB=-ldb_cxx-4.6
 
 %install
 rm -rf $RPM_BUILD_ROOT
