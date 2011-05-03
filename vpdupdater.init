@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# vpdupdater	VPD Database updater
+#
+# chkconfig:	345 10 90
+#
+# description:	VPD Database updater
+#
+# processname:	vpdupdate
+#
+# $Id$
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+RUN_VPDUPDATE=yes
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/vpdupdater ] && . /etc/sysconfig/vpdupdater
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start|restart|try-restart|force-reload)
+	if is_yes "$RUN_VPDUPDATE" ; then
+		/usr/sbin/vpdupdate
+	fi
+	;;
+  stop)
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|try-restart|force-reload}"
+	exit 3
+esac
+
+exit $RETVAL
