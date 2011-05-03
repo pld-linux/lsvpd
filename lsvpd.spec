@@ -28,6 +28,8 @@ BuildRequires:	sg3_utils-devel
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	/sbin/ldconfig
+Requires:	/etc/pci.ids
+Requires:	/etc/usb.ids
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 

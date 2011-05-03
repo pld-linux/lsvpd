@@ -30,9 +30,10 @@
 -if USB_IDS_LOC2
 -AM_CXXFLAGS += -DUSB_IDS='"/usr/share/hwdata/usb.ids"'
 -else
- AM_CXXFLAGS += -DUSB_IDS='"/usr/share/misc/usb.ids"'
+-AM_CXXFLAGS += -DUSB_IDS='"/usr/share/misc/usb.ids"'
 -endif
 -endif
++AM_CXXFLAGS += -DUSB_IDS='"/etc/usb.ids"'
  
  SUBDIRS = docs
  
