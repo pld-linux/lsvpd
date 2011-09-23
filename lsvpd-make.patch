@@ -1,13 +1,13 @@
---- lsvpd-1.6.10/Makefile.am.orig	2010-10-16 01:18:16.000000000 +0200
-+++ lsvpd-1.6.10/Makefile.am	2011-05-02 20:46:42.634706026 +0200
+--- lsvpd-1.6.11/Makefile.am.orig	2011-06-16 00:59:59.000000000 +0200
++++ lsvpd-1.6.11/Makefile.am	2011-09-23 19:29:44.906120445 +0200
 @@ -40,7 +40,7 @@
  lsmcode_SOURCES = src/output/lsmcode.cpp \
  		$(update_h_files)
  
--vpdupdate_LDADD = -L. -lz -lstdc++ -lvpd_cxx -lsgutils
-+vpdupdate_LDADD = -L. -lz -lstdc++ -lvpd_cxx -lsgutils2
+-vpdupdate_LDADD = -lz -lstdc++ -lvpd_cxx -lsgutils
++vpdupdate_LDADD = -lz -lstdc++ -lvpd_cxx -lsgutils2
  vpdupdate_LDFLAGS = -Wall
- lsvpd_LDADD = -L. -lz -lstdc++ -lvpd_cxx
+ lsvpd_LDADD = -lz -lstdc++ -lvpd_cxx
  lsvpd_LDFLAGS = -Wall
 @@ -53,25 +53,9 @@
  
@@ -22,8 +22,7 @@
 -AM_CXXFLAGS += -DPCI_IDS='"/usr/share/misc/pci.ids"'
 -endif
 -endif
-+AM_CXXFLAGS += -DPCI_IDS='"/etc/pci.ids"'
- 
+-
 -if USB_IDS_LOC
 -AM_CXXFLAGS += -DUSB_IDS='"/usr/share/usb.ids"'
 -else
@@ -33,6 +32,8 @@
 -AM_CXXFLAGS += -DUSB_IDS='"/usr/share/misc/usb.ids"'
 -endif
 -endif
++AM_CXXFLAGS += -DPCI_IDS='"/etc/pci.ids"'
++
 +AM_CXXFLAGS += -DUSB_IDS='"/etc/usb.ids"'
  
  SUBDIRS = docs

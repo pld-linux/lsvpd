@@ -8,15 +8,16 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.6.10
+Version:	1.6.11
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	36b6378586c9566c18175d7612069e41
+# Source0-md5:	6d63c45af3efbac6fbc5dd01648d0f7f
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
 Patch0:		%{name}-make.patch
+Patch1:		%{name}-nortas.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -55,6 +56,7 @@ wypisuje poziomy mikrokodu i firmware'u.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
