@@ -24,7 +24,7 @@ BuildRequires:	automake
 %{?with_rtas:BuildRequires:	librtas-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
-BuildRequires:	libvpd-devel >= 2
+BuildRequires:	libvpd-cxx-devel >= 2
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sg3_utils-devel
 BuildRequires:	zlib-devel
