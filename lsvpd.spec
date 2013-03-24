@@ -8,12 +8,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.6.11
+Version:	1.7.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	6d63c45af3efbac6fbc5dd01648d0f7f
+# Source0-md5:	f412a63741dc29e6a23999793237b524
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
 Patch0:		%{name}-make.patch
@@ -24,13 +24,15 @@ BuildRequires:	automake
 %{?with_rtas:BuildRequires:	librtas-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
+BuildRequires:	libvpd-devel >= 2
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sg3_utils-devel
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	/sbin/ldconfig
-Requires:	/etc/pci.ids
-Requires:	/etc/usb.ids
+Requires:	/lib/hwdata/pci.ids
+Requires:	/lib/hwdata/usb.ids
+Requires:	hwdata >= 0.243-5
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -96,6 +98,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README TODO docs/*.html
+%attr(755,root,root) %{_sbindir}/invscout
 %attr(755,root,root) %{_sbindir}/lscfg
 %attr(755,root,root) %{_sbindir}/lsmcode
 %attr(755,root,root) %{_sbindir}/lsvio
