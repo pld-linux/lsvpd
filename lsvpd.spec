@@ -8,18 +8,19 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.7.0
+Version:	1.7.5
 Release:	1
-License:	GPL v2+
+License:	GPL v2+ with librtas exception
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	f412a63741dc29e6a23999793237b524
+# Source0-md5:	c301c1e19987475af816414a066b689f
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
-Patch0:		%{name}-make.patch
-Patch1:		%{name}-nortas.patch
+# from libvpd sources
+Source3:	90-vpdupdate.rules
+Patch0:		%{name}-nortas.patch
 URL:		http://linux-diag.sourceforge.net/Lsvpd.html
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 %{?with_rtas:BuildRequires:	librtas-devel}
 BuildRequires:	libstdc++-devel
@@ -27,6 +28,7 @@ BuildRequires:	libtool >= 2:2.0
 BuildRequires:	libvpd-cxx-devel >= 2
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sg3_utils-devel
+BuildRequires:	sqlite3-devel >= 3
 BuildRequires:	zlib-devel
 Requires(post,preun):	/sbin/chkconfig
 Requires(post):	/sbin/ldconfig
@@ -58,7 +60,6 @@ wypisuje poziomy mikrokodu i firmware'u.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -78,6 +79,10 @@ rm -rf $RPM_BUILD_ROOT
 
 install -D -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/vpdupdater
 install -D -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/vpdupdater
+install -D -p %{SOURCE3} $RPM_BUILD_ROOT/lib/udev/rules.d/90-vpdupdate.rules
+
+install -d $RPM_BUILD_ROOT/var/lib/lsvpd
+touch $RPM_BUILD_ROOT/var/lib/lsvpd/run.vpdupdate
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,8 +102,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README TODO docs/*.html
-%attr(755,root,root) %{_sbindir}/invscout
+%doc AUTHORS COPYING ChangeLog NEWS README
 %attr(755,root,root) %{_sbindir}/lscfg
 %attr(755,root,root) %{_sbindir}/lsmcode
 %attr(755,root,root) %{_sbindir}/lsvio
@@ -109,6 +113,10 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lsvpd/scsi_templates.conf
 %attr(754,root,root) /etc/rc.d/init.d/vpdupdater
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/vpdupdater
+/lib/udev/rules.d/90-vpdupdate.rules
+%dir /var/lib/lsvpd
+# empty control file, only mtime changes and matters
+%verify(not mtime) /var/lib/lsvpd/run.vpdupdate
 %{_mandir}/man8/lscfg.8*
 %{_mandir}/man8/lsmcode.8*
 %{_mandir}/man8/lsvio.8*

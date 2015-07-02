@@ -1,13 +1,13 @@
---- lsvpd-1.6.11/configure.in.orig	2011-07-22 10:11:41.000000000 +0200
-+++ lsvpd-1.6.11/configure.in	2011-09-23 19:33:05.106127148 +0200
-@@ -27,9 +27,7 @@
- AC_CHECK_HEADER([sqlite3.h],,[AC_MSG_ERROR([sqlite header files are required for building lsvpd])])
+--- lsvpd-1.7.5/configure.ac.orig	2015-07-02 21:30:28.721114988 +0200
++++ lsvpd-1.7.5/configure.ac	2015-07-02 21:32:09.714444083 +0200
+@@ -33,9 +33,7 @@
+ AC_CHECK_HEADER([libvpd-2/lsvpd.hpp],,[AC_MSG_ERROR([libvpd header files required for building lsvpd])])
  
  #libraries
 -AC_CHECK_LIB(rtas, rtas_get_vpd, [], [
 -			echo "rtas library is required for lsvpd"
 -			exit 1 ])
 +AC_CHECK_LIB(rtas, rtas_get_vpd)
- AC_CHECK_LIB(sqlite3, sqlite3_libversion_number, [], [ 
+ AC_CHECK_LIB(sqlite3, sqlite3_libversion_number, [], [
  			echo "sqlite3 library is required for lsvpd"
  			exit 1 ])

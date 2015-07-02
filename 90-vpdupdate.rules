@@ -1,0 +1,1 @@
+KERNELS=="*", ACTION=="*", DEVPATH=="/devices/*", RUN+="/bin/touch /var/lib/lsvpd/run.vpdupdate"
