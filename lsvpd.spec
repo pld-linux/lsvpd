@@ -8,12 +8,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.7.8
+Version:	1.7.9
 Release:	1
 License:	GPL v2+ with librtas exception
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	6af35e67658ccd8652b5da5ffe872fc4
+# Source0-md5:	57b237df3f30de06d8c9fc81ecb92ca6
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
 # from libvpd sources
@@ -25,7 +25,7 @@ BuildRequires:	automake
 %{?with_rtas:BuildRequires:	librtas-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
-BuildRequires:	libvpd-cxx-devel >= 2
+BuildRequires:	libvpd-cxx-devel >= 2.2.6
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sg3_utils-devel
 BuildRequires:	sqlite3-devel >= 3
@@ -82,7 +82,6 @@ install -D -p %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/vpdupdater
 install -D -p %{SOURCE3} $RPM_BUILD_ROOT/lib/udev/rules.d/90-vpdupdate.rules
 
 install -d $RPM_BUILD_ROOT/var/lib/lsvpd
-touch $RPM_BUILD_ROOT/var/lib/lsvpd/run.vpdupdate
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -115,8 +114,6 @@ fi
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/vpdupdater
 /lib/udev/rules.d/90-vpdupdate.rules
 %dir /var/lib/lsvpd
-# empty control file, only mtime changes and matters
-%verify(not mtime) /var/lib/lsvpd/run.vpdupdate
 %{_mandir}/man8/lscfg.8*
 %{_mandir}/man8/lsmcode.8*
 %{_mandir}/man8/lsvio.8*

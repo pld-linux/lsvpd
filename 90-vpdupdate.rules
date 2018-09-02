@@ -1,1 +1,1 @@
-KERNELS=="*", ACTION=="*", DEVPATH=="/devices/*", RUN+="/bin/touch /var/lib/lsvpd/run.vpdupdate"
+KERNELS=="*", ACTION=="*", DEVPATH=="/devices/*", RUN+="/bin/touch /run/run.vpdupdate"
