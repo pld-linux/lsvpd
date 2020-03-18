@@ -8,12 +8,12 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.7.9
+Version:	1.7.10
 Release:	1
 License:	GPL v2+ with librtas exception
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	57b237df3f30de06d8c9fc81ecb92ca6
+# Source0-md5:	11c59a64c8c2d9ed691f900af32f3879
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
 # from libvpd sources
@@ -109,6 +109,7 @@ fi
 %attr(755,root,root) %{_sbindir}/vpdupdate
 %dir %{_sysconfdir}/lsvpd
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lsvpd/cpu_mod_conv.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lsvpd/nvme_templates.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/lsvpd/scsi_templates.conf
 %attr(754,root,root) /etc/rc.d/init.d/vpdupdater
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/vpdupdater
