@@ -9,7 +9,7 @@ Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
 Version:	1.7.10
-Release:	3
+Release:	4
 License:	GPL v2+ with librtas exception
 Group:		Applications/System
 Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
@@ -67,6 +67,7 @@ wypisuje poziomy mikrokodu i firmware'u.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+export CXXFLAGS="%{rpmcxxflags} -std=c++11"
 %configure \
 	%{!?with_rtas:ac_cv_lib_rtas_rtas_get_vpd=no}
 %{__make}
