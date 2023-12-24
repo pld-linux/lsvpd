@@ -20,6 +20,7 @@ Source2:	vpdupdater.sysconfig
 # from libvpd sources
 Source3:	90-vpdupdate.rules
 Patch0:		%{name}-nortas.patch
+Patch1:		%{name}-unknown-platform.patch
 URL:		https://github.com/power-ras/lsvpd
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
@@ -62,6 +63,7 @@ wypisuje poziomy mikrokodu i firmware'u.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}

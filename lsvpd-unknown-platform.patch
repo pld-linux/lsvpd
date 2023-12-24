@@ -1,0 +1,71 @@
+--- lsvpd-1.7.15/src/internal/sys_interface/platformcollector.cpp.orig	2023-09-28 16:02:21.000000000 +0200
++++ lsvpd-1.7.15/src/internal/sys_interface/platformcollector.cpp	2023-12-24 10:49:56.027693044 +0100
+@@ -111,9 +111,6 @@ error:
+ 			}
+ 		}
+ 
+-		if (platform_type == PF_NULL)
+-			platform_type = PF_ERROR;
+-
+ 		ifs.close();
+ 
+ 		/* Get Service processor type */
+--- lsvpd-1.7.15/src/output/lscfg.cpp.orig	2023-09-28 16:02:21.000000000 +0200
++++ lsvpd-1.7.15/src/output/lscfg.cpp	2023-12-24 11:23:14.750198369 +0100
+@@ -754,11 +754,11 @@ int main( int argc, char** argv )
+ 	switch (PlatformCollector::platform_type) {
+ 	case PF_PSERIES_KVM_GUEST: /* Fall through */
+ 		rc = 0;
+-	case PF_NULL:	/* Fall through */
+ 	case PF_ERROR:
+ 		cout<< argv[0] << " is not supported on the "
+ 			<< platform << " platform" << endl;
+ 		return rc;
++	case PF_NULL:	/* Fall through */
+ 	default:
+ 		;
+ 	}
+--- lsvpd-1.7.15/src/output/lsmcode.cpp.orig	2023-09-28 16:02:21.000000000 +0200
++++ lsvpd-1.7.15/src/output/lsmcode.cpp	2023-12-24 11:23:43.206710874 +0100
+@@ -579,11 +579,11 @@ int main( int argc, char** argv )
+ 	switch (PlatformCollector::platform_type) {
+ 	case PF_PSERIES_KVM_GUEST:	/* Fall through */
+ 		rc = 0;
+-	case PF_NULL:	/* Fall through */
+ 	case PF_ERROR:
+ 		cout<< "lsmcode is not supported on the "
+ 			<< platform << " platform" << endl;
+ 		return rc;
++	case PF_NULL:	/* Fall through */
+ 	default:
+ 		;
+ 	}
+--- lsvpd-1.7.15/src/output/lsvio.cpp.orig	2023-09-28 16:02:21.000000000 +0200
++++ lsvpd-1.7.15/src/output/lsvio.cpp	2023-12-24 11:24:09.633234376 +0100
+@@ -222,11 +222,11 @@ int main( int argc, char** argv )
+ 	case PF_PSERIES_KVM_GUEST:	/* Fall through */
+ 	case PF_OPAL:		/* Fall through */
+ 		rc = 0;
+-	case PF_NULL:	/* Fall through */
+ 	case PF_ERROR:
+ 		cout<< "lsvio is not supported on the "
+ 			<< platform << " platform" << endl;
+ 		return rc;
++	case PF_NULL:	/* Fall through */
+ 	default:
+ 		;
+ 	}
+--- lsvpd-1.7.15/src/output/lsvpd.cpp.orig	2023-09-28 16:02:21.000000000 +0200
++++ lsvpd-1.7.15/src/output/lsvpd.cpp	2023-12-24 11:22:31.047101795 +0100
+@@ -390,10 +390,10 @@ int main( int argc, char** argv )
+ 	switch (PlatformCollector::platform_type) {
+ 	case PF_PSERIES_KVM_GUEST:	/* Fall through */
+ 		rc = 0;
+-	case PF_NULL:	/* Fall through */
+ 	case PF_ERROR:
+ 		cout<< "lsvpd is not supported on the " << platform << " platform" << endl;
+ 		return rc;
++	case PF_NULL:	/* Fall through */
+ 	default:
+ 		;
+ 	}
