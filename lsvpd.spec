@@ -8,24 +8,25 @@
 Summary:	VPD/hardware inventory utilities for Linux
 Summary(pl.UTF-8):	Narzędzia do inwentaryzacji VPD/sprzętu dla Linuksa
 Name:		lsvpd
-Version:	1.7.10
-Release:	4
+Version:	1.7.15
+Release:	1
 License:	GPL v2+ with librtas exception
 Group:		Applications/System
-Source0:	http://downloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.gz
-# Source0-md5:	11c59a64c8c2d9ed691f900af32f3879
+#Source0Download: https://github.com/power-ras/lsvpd/tags
+Source0:	https://github.com/power-ras/lsvpd/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	7da3af9d12a6ef5676c1f7c1f32e8238
 Source1:	vpdupdater.init
 Source2:	vpdupdater.sysconfig
 # from libvpd sources
 Source3:	90-vpdupdate.rules
 Patch0:		%{name}-nortas.patch
-URL:		http://linux-diag.sourceforge.net/Lsvpd.html
+URL:		https://github.com/power-ras/lsvpd
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
 %{?with_rtas:BuildRequires:	librtas-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
-BuildRequires:	libvpd-cxx-devel >= 2.2.6
+BuildRequires:	libvpd-cxx-devel >= 2.2.9
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sg3_utils-devel
 BuildRequires:	sqlite3-devel >= 3
@@ -35,6 +36,7 @@ Requires(post):	/sbin/ldconfig
 Requires:	/lib/hwdata/pci.ids
 Requires:	/lib/hwdata/usb.ids
 Requires:	hwdata >= 0.243-5
+Requires:	libvpd-cxx >= 2.2.9
 Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
